@@ -1,0 +1,28 @@
+import cv2
+import numpy as np
+
+
+main_image = cv2.imread('main_image.jpg')
+
+
+inserted_image = cv2.imread('inserted_image.jpg')
+
+
+if inserted_image.shape[0] > main_image.shape[0] or inserted_image.shape[1] > main_image.shape[1]:
+    print("The inserted image is too large to fit in the main image.")
+else:
+   
+    x_offset = 100  # X-coordinate where you want to paste the image
+    y_offset = 50   # Y-coordinate where you want to paste the image
+
+    
+    inserted_height, inserted_width, _ = inserted_image.shape
+    main_image[y_offset:y_offset + inserted_height, x_offset:x_offset + inserted_width] = inserted_image
+
+  
+    cv2.imwrite('output_image.jpg', main_image)
+
+   
+    cv2.imshow('Resulting Image', main_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
