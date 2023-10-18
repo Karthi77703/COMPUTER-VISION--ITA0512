@@ -1,0 +1,22 @@
+import cv2
+import numpy as np
+
+
+image = cv2.imread('input_image.jpg', cv2.IMREAD_GRAYSCALE)
+
+
+kernel = np.ones((5, 5), np.uint8)
+
+
+dilation = cv2.dilate(image, kernel, iterations=1)
+erosion = cv2.erode(image, kernel, iterations=1)
+
+morphological_gradient = cv2.subtract(dilation, erosion)
+
+
+cv2.imshow('Original Image', image)
+cv2.imshow('Dilation', dilation)
+cv2.imshow('Erosion', erosion)
+cv2.imshow('Morphological Gradient', morphological_gradient)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
