@@ -1,0 +1,25 @@
+import cv2
+import numpy as np
+
+
+original_image = cv2.imread('original_image.jpg')
+watermark_image = cv2.imread('watermark.png', cv2.IMREAD_UNCHANGED)
+
+
+height, width, _ = original_image.shape
+
+
+watermark_image = cv2.resize(watermark_image, (width, height))
+
+
+alpha_channel = watermark_image[:, :, 3]
+
+
+image_with_watermark = original_image.copy()
+
+
+for c in range(0, 3):
+    image_with_watermark[:, :, c] = original_image[:, :, c] * (1 - alpha_channel / 255.0) + watermark_image[:, :, c] * (alpha_channel / 255.0)
+
+
+cv2.imwrite('image_with_watermark.jpg', image_with_watermark)
