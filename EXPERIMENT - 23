@@ -1,0 +1,30 @@
+import cv2
+import numpy as np
+
+
+image = cv2.imread('your_image.jpg')
+
+
+ksize = (0, 0)
+sigma = 1.5  # You can adjust the sigma value
+blurred = cv2.GaussianBlur(image, ksize, sigma)
+
+
+unsharp_mask = cv2.addWeighted(image, 1.5, blurred, -0.5, 0)
+
+
+unsharp_mask = np.clip(unsharp_mask, 0, 255)
+
+
+unsharp_mask = np.uint8(unsharp_mask)
+
+
+cv2.imshow('Original Image', image)
+cv2.imshow('Sharpened Image', unsharp_mask)
+
+
+cv2.imwrite('sharpened_image.jpg', unsharp_mask)
+
+ws
+cv2.waitKey(0)
+cv2.destroyAllWindows()
